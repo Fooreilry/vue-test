@@ -1,13 +1,16 @@
 <template>
     <div class="tools-card">
-        <p class="tools-card__title">Превращайте лидов в покупателей</p>
-        <p class="tools-card__text">Используйте чат-боты, формы подписки и лендинги для сбора контактов. Автоматически добавляйте контакты в свою СRM
-        и сопровождайте их по воронке до успешного завершения сделки.</p>
+        <p class="tools-card__title">{{tool.title}}</p>
+        <p class="tools-card__text">{{tool.body}}</p>
     </div>
 </template>
 <script>
 export default {
-    
+    props: {
+        tool: {
+            type: Object,
+        }
+    }
 }
 </script>
 <style scoped>
@@ -18,6 +21,7 @@ export default {
     width: 100%;
 }
 .tools-card__title{
+    margin-bottom: 32px;
     font-size: 24px;
     line-height: 32px;
     color: #010849;
@@ -25,5 +29,6 @@ export default {
 .tools-card__text{
     line-height: 26px;
     color: #010849;
+    opacity: 0.5;
 }
 </style>

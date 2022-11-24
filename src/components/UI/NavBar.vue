@@ -5,8 +5,7 @@
                 <img :src="require('@/assets/img/logo.svg')" alt="logotype">
             </div>
             <ul class="navbar__items">
-                <router-link class="navbar__item" to="/">Главная</router-link>
-                <router-link class="navbar__item" to="/profile">Профиль</router-link>
+                <router-link v-for="link in navLinks" :key="index" :to="link.path">{{link.name}}</router-link>
                 <li ></li>
                 <li class="navbar__item"></li>
             </ul>
@@ -20,7 +19,15 @@
 
 <script>
 export default {
-    name: 'navbar'
+    name: 'navbar',
+    data() {
+        return {
+            navLinks: [
+                { name: 'Главная' , path: '/'},
+                { name: 'Профиль', path: '/profile'}
+            ]
+        }
+    },
 }
 </script>
 
