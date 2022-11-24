@@ -18,15 +18,18 @@
     </header>
     <tools-card-item />
     <advantages-card-item/>
+    <my-footer/>
 </template>
 
 <script>
 import ToolsCardItem from '@/components/ToolsCardItem.vue'
 import AdvantagesCardItem from '@/components/AdvantagesCardItem.vue'
+import MyFooter from '@/components/MyFooter.vue';
 export default {
     components: {
         ToolsCardItem,
-        AdvantagesCardItem
+        AdvantagesCardItem,
+        MyFooter
     }
 }
 </script>
