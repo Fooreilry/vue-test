@@ -1,6 +1,6 @@
 <template>
   <div class="app">
-    <div class="conteiner">
+    <div class="app__conteiner">
       <router-view></router-view>
     </div>
   </div>
@@ -24,8 +24,18 @@ body{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-  }
-.conteiner{
+}
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+li {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+.app__conteiner{
   padding: 32px 32px 0;
 }
 </style>

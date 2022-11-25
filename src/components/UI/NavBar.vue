@@ -2,16 +2,14 @@
     <nav class="navbar">
         <div class="navbar__wrapper">
             <div @click="$router.push('/')" class="navbar__logo">
-                <img :src="require('@/assets/img/logo.svg')" alt="logotype">
+                <img class="navbar__img" :src="require('@/assets/img/logo.svg')" alt="logotype">
             </div>
             <ul class="navbar__items">
-                <router-link v-for="link in navLinks" :key="index" :to="link.path">{{link.name}}</router-link>
-                <li ></li>
-                <li class="navbar__item"></li>
+                <router-link class="navbar__item" v-for="link in navLinks" :key="index" :to="link.path">{{link.name}}</router-link>
             </ul>
             <div class="navbar__user-menu">
                 <div class="navbar__login">Войти</div>
-                <my-button>Регистрация</my-button>
+                <my-button class="navbar__register">Регистрация</my-button>
             </div>
         </div>
     </nav>
@@ -38,21 +36,21 @@ export default {
 .navbar__wrapper {
     display: flex;
     align-items: center;
+    justify-content: space-between;
 }
-ul{
-    margin: 0;
-    padding: 0;
+.navbar__logo{
+    margin-right: 64px;
 }
-li {
-    margin: 0;
-    padding: 0;
-    list-style-type: none;
+.navbar__img{
+    display: block;
 }
 .navbar__items{
     display: flex;
     align-items: center;
     justify-content: start;
     gap: 48px;
+    width: 100%;
+    justify-content: start;
 }
 .navbar__item{
     font-style: italic;
@@ -66,12 +64,16 @@ li {
     display: flex;
     align-items: center;
     margin-left: auto;
+    width: 100%;
     gap: 29px;
+    justify-content: end;
 }
 .navbar__login{
     font-size: 18px;
     line-height: 32px;
     font-weight: 400;
+    text-align: end;
+    width: 92px;
 }
 .navbar__login::before {
     content: url("@/assets/img/Login.svg");
@@ -79,5 +81,8 @@ li {
     top: 6px;
     right: 10px;
     
+}
+.navbar__register{
+    padding: 12px 24px;
 }
 </style>

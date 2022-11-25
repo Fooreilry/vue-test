@@ -1,12 +1,70 @@
 <template>
     <div class="footer">
-        <div class="logo"></div>
+        <div class="footer__wrapper">
+            <div class="footer__logo"></div>
+            <div class="footer-menu">
+                <div class="footer-menu__wrapper">
+                    <ul class="footer-menu__items">
+                        <h3 class="footer-menu__items-title">Email</h3>
+                        <li v-for="(email, index) in emails" :key="index" class="footer-menu__item">{{ email }}</li>
+                    </ul>
+                    <ul class="footer-menu__items">
+                        <h3 class="footer-menu__items-title">Email</h3>
+                        <li v-for="(email, index) in emails" :key="index" class="footer-menu__item">{{ email }}</li>
+                    </ul>
+                    <ul class="footer-menu__items">
+                        <h3 class="footer-menu__items-title">Email</h3>
+                        <li v-for="(email, index) in emails" :key="index" class="footer-menu__item">{{ email }}</li>
+                    </ul>
+                    <ul class="footer-menu__items">
+                        <h3 class="footer-menu__items-title">Email</h3>
+                        <li v-for="(email, index) in emails" :key="index" class="footer-menu__item">{{ email }}</li>
+                    </ul>
+                    <ul class="footer-menu__items">
+                        <h3 class="footer-menu__items-title">Email</h3>
+                        <li v-for="(email, index) in emails" :key="index" class="footer-menu__item">{{ email }}</li>
+                    </ul>
+                    <ul class="footer-menu__items">
+                        <h3 class="footer-menu__items-title">Email</h3>
+                        <li v-for="(email, index) in emails" :key="index" class="footer-menu__item">{{ email }}</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-links">
+                <ul class="rules-links">
+                    <li class="rules-link">Правила использования</li>
+                    <li class="rules-link">Безопасность SendPulse</li>
+                    <li class="rules-link">Политика Cookies</li>
+                    <li class="rules-link">Политика конфиденциальности</li>
+                </ul>
+                <ul class="social-links">
+                    <li class="social-link"><img :src="require('@/assets/img/facebook.svg')" alt=""></li>
+                    <li class="social-link"><img :src="require('@/assets/img/twitter.svg')" alt=""></li>
+                    <li class="social-link"><img :src="require('@/assets/img/linkedin.svg')" alt=""></li>
+                    <li class="social-link"><img :src="require('@/assets/img/youtube.svg')" alt=""></li>
+                </ul>
+            </div>
+        </div>
     </div>
 </template>
 
 <script>
 export default {
-    
+    data() {
+        return {
+            emails: [
+                'Email рассылка',
+                'Транзакционные письма',
+                'Исправление списка',
+                'Конструктор писем',
+                'Формы подписки',
+                'Автоматические рассылки',
+                'Готовые шаблоны',
+                'A / B тестирование',
+                'Расширение для Chrome'
+            ],
+        }
+    },
 }
 </script>
 
@@ -16,9 +74,43 @@ export default {
     background-color: #ffffff;
     border-radius: 40px 40px 0 0;
 }
-.logo{
+.footer__wrapper{
+    padding: 72px 0 80px;
+    width: 100%;
+    max-width: 1375px;
+    margin: 0 auto;
+}
+.footer__logo{
     width: 187px;
     height: 32px;
-    background-color: gray;
+    background-image: url('@/assets/img/logo2.svg');
+    margin-bottom: 80px;
+}
+.footer-menu{
+    width: 100%;
+}
+.footer-menu__wrapper{
+    margin-bottom: 68px;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+}
+.footer-menu__items{
+    width: 100%;
+}
+.footer-menu__items-title{
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 32px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #010849;
+    margin-bottom: 16px;
+}
+.footer-menu__item{
+    color: #010849;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 38px;
+    opacity: 0.5;
 }
 </style>

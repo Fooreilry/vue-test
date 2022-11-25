@@ -15,7 +15,7 @@ export default {
 </script>
 <style scoped>
 .tools-card{
-    padding: 48px 40px 42px;
+    padding: 48px 40px 16px;
     background-color: #ffffff;
     border-radius: 40px;
     width: 100%;
@@ -27,6 +27,8 @@ export default {
     color: #010849;
 }
 .tools-card__text{
+    font-size: 18px;
+    font-weight: 400;
     line-height: 26px;
     color: #010849;
     opacity: 0.5;
