@@ -7,10 +7,7 @@
                 <div class="profile-form">
                     <div class="profile-form__wrapper">
                         <profile-avatar/>
-                        <div class="profile-form__content">
-                            <form-user-information/>
-                            <form-password/>
-                        </div>
+                        <form-user-information/>
                     </div>
                 </div>
             </div>

@@ -21,6 +21,7 @@ export default {
     color: #ffffff;
     font-style: italic;
     font-weight: 400;
+    cursor: pointer;
 }
 .button_grey{
     background-color: #DAECFB;
