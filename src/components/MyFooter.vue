@@ -9,24 +9,24 @@
                         <li v-for="(email, index) in emails" :key="index" class="footer-menu__item">{{ email }}</li>
                     </ul>
                     <ul class="footer-menu__items">
-                        <h3 class="footer-menu__items-title">Email</h3>
-                        <li v-for="(email, index) in emails" :key="index" class="footer-menu__item">{{ email }}</li>
+                        <h3 class="footer-menu__items-title">Чат-боты</h3>
+                        <li v-for="(bot, index) in bots" :key="index" class="footer-menu__item">{{ bot }}</li>
                     </ul>
                     <ul class="footer-menu__items">
-                        <h3 class="footer-menu__items-title">Email</h3>
-                        <li v-for="(email, index) in emails" :key="index" class="footer-menu__item">{{ email }}</li>
+                        <h3 class="footer-menu__items-title">Сервисы</h3>
+                        <li v-for="(service, index) in services" :key="index" class="footer-menu__item">{{ service }}</li>
                     </ul>
                     <ul class="footer-menu__items">
-                        <h3 class="footer-menu__items-title">Email</h3>
-                        <li v-for="(email, index) in emails" :key="index" class="footer-menu__item">{{ email }}</li>
+                        <h3 class="footer-menu__items-title">Полезное</h3>
+                        <li v-for="(useful, index) in usefuls" :key="index" class="footer-menu__item">{{ useful }}</li>
                     </ul>
-                    <ul class="footer-menu__items">
-                        <h3 class="footer-menu__items-title">Email</h3>
-                        <li v-for="(email, index) in emails" :key="index" class="footer-menu__item">{{ email }}</li>
+                    <ul class="footer-menu__items footer-menu__items_row-1">
+                        <h3 class="footer-menu__items-title">Партнерам</h3>
+                        <li v-for="(partner, index) in partners" :key="index" class="footer-menu__item">{{ partner }}</li>
                     </ul>
-                    <ul class="footer-menu__items">
-                        <h3 class="footer-menu__items-title">Email</h3>
-                        <li v-for="(email, index) in emails" :key="index" class="footer-menu__item">{{ email }}</li>
+                    <ul class="footer-menu__items footer-menu__items_row-2">
+                        <h3 class="footer-menu__items-title">О компании</h3>
+                        <li v-for="(about, index) in abouts" :key="index" class="footer-menu__item">{{ about }}</li>
                     </ul>
                 </div>
             </div>
@@ -63,6 +63,51 @@ export default {
                 'A / B тестирование',
                 'Расширение для Chrome'
             ],
+            bots: [
+                'Конструктор чат - ботов',
+                'Instagram чат - боты',
+                'Facebook чат - боты',
+                'Telegram чат - боты',
+                'WhatsApp чат - боты',
+                'WhatsApp Business API',
+                'Виджеты подписки',
+                'Чат - бот приложение',
+                'Примеры чат - ботов',
+            ],
+            services: [
+                'Создание онлайн - курсов',
+                'CRM',
+                'Конструктор лендингов',
+                'Мультиссылка для соцсетей',
+                'SMS рассылка',
+                'Viber рассылка',
+                'Web push уведомления',
+                'Поп - ап формы',
+            ],
+            usefuls: [
+                'Мероприятия',
+                'Академия SendPulse',
+                'База знаний',
+                'Глоссарий',
+                'Блог',
+                'Маркетинг под ключ',
+                'Биржа email проектов',
+                'Интеграции',
+                'API',
+                'Каталог экспертов'
+            ],
+            partners: [
+                'Партнёрская программа',
+                'Реферальная программа',
+                'Сертификация'
+            ],
+            abouts: [
+                'Команда',
+                'Клиенты',
+                'Отзывы клиентов',
+                'Обновления сервиса',
+                'Карьера'
+            ]
         }
     },
 }
@@ -93,9 +138,18 @@ export default {
     margin-bottom: 68px;
     display: grid;
     grid-template-columns: repeat(5, 1fr);
+    grid-auto-rows: 186px auto;
 }
 .footer-menu__items{
     width: 100%;
+}
+.footer-menu__items_row-1{
+    grid-column-start: 5;
+    grid-row-start: 1;
+}
+.footer-menu__items_row-2{
+    grid-column-start: 5;
+    grid-row-start: 2;
 }
 .footer-menu__items-title{
     font-weight: 400;
@@ -112,5 +166,29 @@ export default {
     font-weight: 400;
     line-height: 38px;
     opacity: 0.5;
+}
+.footer-links{
+    display: flex;
+    width: 100%;
+    justify-content: end;
+}
+.social-links{
+    display: flex;
+    gap: 20px;
+}
+.rules-links{
+    width: 100%;
+    display: flex;
+    align-self: end;
+    justify-content: start;
+    gap: 50px;
+
+}
+.rules-link{
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 32px;
+    color: #029EEB;
+    cursor: pointer;
 }
 </style>

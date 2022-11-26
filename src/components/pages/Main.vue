@@ -1,21 +1,5 @@
 <template>
-    <header class="header">
-        <div class="conteiner">
-            <navbar class="header__navbar"/>
-            <div class="header__content">
-                <h2 class="header__title">Единая платформа <br>
-                    для маркетинга <br>
-                    и продаж</h2>
-                <p class="header__text">Выстраивайте диалоги <br>
-                    с клиентами через email, SMS <br>
-                    и чат-боты в мессенджерах</p>
-                <div class="header__buttons">
-                    <my-button class="button_grey">Начать бесплатно</my-button>
-                    <my-button>Войти</my-button>
-                </div>
-            </div>
-        </div>
-    </header>
+    <my-header/>
     <!-- разбить на блоки -->
     <div class="tool-kit">
         <div class="tool-kit__wrapper">
@@ -30,6 +14,7 @@
     <div class="advantages">
         <div class="advantages__wrapper">
             <div class="conteiner">
+                <h2 class="advantages__title">Преимущества платформы</h2>
                 <div class="advantages-list">
                     <advantages-card-item v-for="(advantage, index) in advantages" :class="[index % 2 !== 0 ? 'advantages-card_orange':'']" :key="index" />
                 </div>
@@ -51,6 +36,7 @@
             <h2 class="banner__title">Совершенствуйте процессы <br> отдела продаж и маркетинга</h2>
             <div class="banner__text">Развивайте бизнес и увеличивайте продажи, используя email <br> маркетинг, чат-боты и бесплатную СRM</div>
             <my-button class="button_grey">Начать бесплатно</my-button>
+            <div class="banner__img"></div>
         </div>
    </div>
     
@@ -61,11 +47,13 @@
 import ToolsCardItem from '@/components/ToolsCardItem.vue'
 import AdvantagesCardItem from '@/components/AdvantagesCardItem.vue'
 import MyFooter from '@/components/MyFooter.vue';
+import MyHeader from '../MyHeader.vue';
 export default {
     components: {
         ToolsCardItem,
         AdvantagesCardItem,
-        MyFooter
+        MyFooter,
+        MyHeader
     },
     data() {
         return {
@@ -77,7 +65,7 @@ export default {
             ],
             tools2: [
                 { icon: '', title: 'CRM', body: 'Отслеживайте наиболее эффективные сделки в СRM. Так вы сможете выделять отдельный сегмент наиболее активных клиентов и поощрять их за преданность бренду.' },
-                { icon: '', title: 'Лендинги', body: 'Создавайте лендинги, не вникая в азы программирования.Привлекательный дизайн и полезный контент лендинга помогут мотивировать потенциальных клиентов к целевому действию.' },
+                { icon: '', title: 'Лендинги', body: 'Создавайте лендинги, не вникая в азы программирования. Привлекательный дизайн и полезный контент лендинга помогут мотивировать потенциальных клиентов к целевому действию.' },
                 { icon: '', title: 'Чат-боты', body: 'Используйте чат-ботов в Facebook, Telegram и WhatsApp, чтобы генерировать новых лидов, дополнительно их прогревать и доводить до сделки.' },
                 { icon: '', title: 'Push уведомления', body: 'Дополните свои кампании web push уведомлениями, чтобы возвращать посетителей на свой сайт и информировать их, например, о новостях и последних распродажах.' },
                 { icon: '', title: 'SMS', body: 'Сделайте SMS рассылку частью воронки продаж. Быстро доставляйте подписчикам актуальную информацию о выгодных акциях, предстоящих мероприятиях, доставке или хранении товара.' },
@@ -94,37 +82,11 @@ export default {
 }
 </script>
 
-<style scoped>
-.header{
-    padding: 32px 0 133px;
-    width: 100%;
-    background-color: #029EEB;
-    border-radius: 40px;
-}
+<style>
 .conteiner{
     margin:  0 auto;
     width: 100%;
     max-width: 1400px;
-}
-.header__navbar{
-    margin-bottom: 123px;
-}
-.header__title{
-    margin-bottom: 32px;
-    font-weight: 400;
-    font-size: 72px;
-    line-height: 80px;
-}
-.header__text{
-    margin-bottom: 40px;
-    font-weight: 400;
-    font-size: 24px;
-    line-height: 32px;
-    color: #DAECFB;
-}
-.header__buttons{
-    display: flex;
-    gap: 18px;
 }
 .tool-kit{
     width: 100%;
@@ -168,7 +130,16 @@ export default {
 .advantages{
     width: 100%;
     background-image: url('@/assets/img/Rectangle 4.png');
+    background-repeat: no-repeat;
+    background-size: cover;
     border-radius: 40px;
+}
+.advantages__title{
+    margin-bottom: 80px;
+    font-weight: 400;
+    font-size: 56px;
+    line-height: 72px;
+    color: #010849;
 }
 .advantages-list{
     display: grid;
@@ -176,7 +147,7 @@ export default {
     column-gap: 24px;
 }
 .advantages__wrapper{
-    padding: 174px 0;
+    padding: 147px 0 174px;
 }
 .banner{
     width: 100%;
@@ -192,7 +163,13 @@ export default {
     line-height: 72px;
     margin-bottom: 24px;
 }
-
+.banner__img{
+    height: 440px;
+    width: 100%;
+    background-image: url('@/assets/img/patterns.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+}
 .banner__text {
     font-weight: 400;
     font-size: 24px;
