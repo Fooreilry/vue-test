@@ -3,11 +3,10 @@
         <div class="profile-conteiner">
             <h2 class="profile__title">Личный кабинет</h2>
             <div class="profile__wrapper">
-                <profile-navigation/>
+                <profile-navigation  class="profile__navigation"/>
                 <div class="profile-form">
                     <div class="profile-form__wrapper">
-                        <profile-avatar/>
-                        <form-user-information/>
+                        <router-view></router-view>
                     </div>
                 </div>
             </div>
@@ -15,29 +14,28 @@
     </div>
 </template>
 <script>
-import FormPassword from '@/components/FormPassword.vue';
 import FormUserInformation from '@/components/FormUserInformation.vue'
-import ProfileAvatar from '@/components/ProfileAvatar.vue'
 import ProfileNavigation from '@/components/ProfileNavigation.vue';
 export default {
     components: {
-        FormPassword,
         FormUserInformation,
-        ProfileAvatar,
         ProfileNavigation
     }
 }
-</script>
-<style>
-
+</script >
+<style scoped>
+body {
+    background-color: #FFFFFF;
+}
 .profile{
     width: 100%;
     background-color: #FFFFFF;
 }
 .profile-conteiner{
+    padding: 184px 25px;
     margin: 0 auto;
     width: 100%;
-    max-width: 1400px;
+    max-width: 1350px;
 }
 .profile__title{
     color: #010849;
@@ -48,7 +46,6 @@ export default {
 }
 .profile__wrapper {
     display: flex;
-    justify-content: start;
 }
 
 
@@ -56,9 +53,8 @@ export default {
     width: 100%;
 }
 
-.profile-form__wrapper { 
-    display: flex;
+.profile__navigation{
+    flex-basis: 40%;
+    margin-right: 96px;
 }
-
-
 </style>

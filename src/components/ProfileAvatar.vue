@@ -1,14 +1,15 @@
 <template>
-    <form >
-        <div class="profile-form__avatar">
-            <div class="profile-form__icon">
-                <div class="profile-form__icon-inner"></div>
+    <form class="profile-avatar">
+        <div class="profile-avatar__wrapper">
+            <div class="profile-avatar__block-img">
+                <input class="profile-avatar__input" type="file" ref="file" @change="changeAvatar" accept="image/png, image/jpeg, image/svg">
+                <img class="profile-avatar__img" :src="srcImg" alt="">
             </div>
-            <ul class="profile-form__avatar-controls">
-                <li class="profile-form__avatar-change">
-                    <img :src="require('@/assets/img/Camera.svg')" alt="">
+            <ul class="profile-avatar__controls">
+                <li class="profile-avatar__change" @click="selectImg">
+                        <img :src="require('@/assets/img/Camera.svg')" alt="">
                 </li>
-                <li class="profile-form__avatar-remove">
+                <li class="profile-avatar__remove" @click="removeAvatar">
                     <img :src="require('@/assets/img/Delete.svg')" alt="">
                 </li>
             </ul>
@@ -16,43 +17,75 @@
     </form>
 </template>
 <script>
+import axios from 'axios'
 export default {
-    
+    props: {
+        defaultImg: {
+            type: String
+        }
+    },
+    data() {
+        return {
+            srcImg: this.defaultImg
+        }
+    },
+    methods: {
+        selectImg() {
+            this.$refs.file.click()
+        },
+        changeAvatar(e) {
+            console.log(e.target.files[0].name);
+            const formData = new FormData()
+            formData.append('avatar', e.target.files[0])
+            this.postReqv(formData)
+        },
+        async postReqv(formData) {
+            const request = await axios.post('https://tinn.io/api/test/avatar/', formData)
+            console.log(request.data.data);
+            this.srcImg = `https://tinn.io/api/test/avatar/${request.data.data.avatar}` 
+        },
+        removeAvatar() {
+            this.srcImg = this.defaultImg
+        }
+    },
 }
 </script>
 <style scoped>
-.profile-form__avatar{
+.profile-avatar{
+    max-width: 175px;
+}
+.profile-avatar__wrapper{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     margin-right: 56px;
 }
 
-.profile-form__icon {
+.profile-avatar__block-img {
+    background-color: #F1F9FF;
     border-radius: 50%;
-    padding: 29.75px;
+    width: 119px;
+    height: 119px;
     margin-bottom: 15.75px;
-    
+    overflow: hidden;
 }
-.profile-form__icon-inner{
-    background-image: url('@/assets/img/prifile_icon.png');
-    background-repeat: no-repeat;
-    width: 59.5px;
-    height: 59.5px;
-    
-}
-.profile-form__avatar-controls{
+.profile-avatar__controls{
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 16px;
 }
-.profile-form__content {
-    display: flex;
-    flex-direction: column;
+.profile-avatar__change{
+    cursor: pointer;
 }
-
-.profile-form__title {
-    font-weight: 400;
-    font-size: 24px;
-    line-height: 40px;
-    color: #010849;
+.profile-avatar__remove{
+    cursor: pointer;
+}
+.profile-avatar__input{
+    display: none;
+}
+.profile-avatar__img{
+    width: 119px;
+    height: 119px;
 }
 </style>

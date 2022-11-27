@@ -120,9 +120,9 @@ export default {
     border-radius: 40px 40px 0 0;
 }
 .footer__wrapper{
-    padding: 72px 0 80px;
+    padding: 72px 22.5px 80px;
     width: 100%;
-    max-width: 1375px;
+    max-width: 1330px;
     margin: 0 auto;
 }
 .footer__logo{

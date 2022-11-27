@@ -1,6 +1,7 @@
 <template>
   <div class="app">
     <div class="app__conteiner">
+      <navbar />
       <router-view></router-view>
     </div>
   </div>
@@ -11,9 +12,8 @@ export default {
 }
 </script>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=ABeeZee:ital@1&display=swap');
+@import url('@/assets/fonts/font.css');
 body{
-  background-color: #F1F9FF;
   font-size: 18px;
   font-style: italic;
   line-height: 32px;
@@ -34,8 +34,5 @@ li {
   margin: 0;
   padding: 0;
   list-style-type: none;
-}
-.app__conteiner{
-  padding: 32px 32px 0;
 }
 </style>
