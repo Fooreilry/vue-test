@@ -1,25 +1,26 @@
 <template>
     <div class="wrapper">
-        <profile-avatar class="user-information__profile-avatar" :defaultImg="userImg"/>
+        <profile-avatar class="user-information__profile-avatar" :defaultImg="userData.userImg"/>
         <form class="user-information" @submit.prevent>
             <h2 class="user-information__title-welcome">Добро пожаловать, {{ welcomeМessage }}!</h2>
             <div class="user-information__user">
+                <!-- Создать UI компонент для input -->
                 <div class="user-information__user-field">
                     <label class="user-information__user-title user-information__user-title_name">Имя</label>
-                    <input class="user-information__user-input" type="text" v-model="v$.username.$model" />
-                    <span class="user-information__error-massage" v-for="(error, index) in v$.username.$errors" :key="index">{{
+                    <input class="user-information__user-input" type="text" v-model="v$.userData.username.$model" />
+                    <span class="user-information__error-massage" v-for="(error, index) in v$.userData.username.$errors" :key="index">{{
                     error.$message }}</span>
                 </div>
                 <div class="user-information__user-field ">
                     <label class="user-information__user-title user-information__user-title_email">Email</label>
-                    <input class="user-information__user-input" type="email" v-model="v$.email.$model" />
-                    <span class="user-information__error-massage" v-for="(error, index) in v$.email.$errors" :key="index">{{
+                    <input class="user-information__user-input" type="email" v-model="v$.userData.email.$model" />
+                    <span class="user-information__error-massage" v-for="(error, index) in v$.userData.email.$errors" :key="index">{{
                     error.$message }}</span>
                 </div>
                 <div class="user-information__user-field">
                     <label class="user-information__user-title user-information__user-title_name_phone">Телефон</label>
-                    <input class="user-information__user-input" type="text" v-model="v$.phone.$model" />
-                    <span class="user-information__error-massage" v-for="(error, index) in v$.phone.$errors" :key="index">{{
+                    <input class="user-information__user-input" type="text" v-model="v$.userData.phone.$model" />
+                    <span class="user-information__error-massage" v-for="(error, index) in v$.userData.phone.$errors" :key="index">{{
                     error.$message }}</span>
                 </div>
             </div>
@@ -28,22 +29,22 @@
                 <div class="user-information__password-field">
                     <label class="user-information__field-password-title">Старый пароль</label>
                     <input class="user-information__password-input" placeholder="Введите пароль..." type="text"
-                        v-model="v$.password.totalPassword.$model" />
-                    <span class="user-information__error-massage" v-for="(error, index) in v$.password.totalPassword.$errors"
+                        v-model="v$.userData.password.totalPassword.$model" />
+                    <span class="user-information__error-massage" v-for="(error, index) in v$.userData.password.totalPassword.$errors"
                         :key="index">{{ error.$message }}</span>
                 </div>
                 <div class="user-information__password-field">
                     <label class="user-information__field-password-title">Новый пароль</label>
                     <input class="user-information__password-input" placeholder="Введите пароль..." type="text"
-                        v-model="v$.password.newPassword.$model" />
-                    <span class="user-information__error-massage" v-for="(error, index) in v$.password.newPassword.$errors"
+                        v-model="v$.userData.password.newPassword.$model" />
+                    <span class="user-information__error-massage" v-for="(error, index) in v$.userData.password.newPassword.$errors"
                         :key="index">{{ error.$message }}</span>
                 </div>
                 <div class="user-information__password-field">
                     <label class="user-information__field-password-title">Повторите новый пароль</label>
                     <input class="user-information__password-input" placeholder="Введите пароль..." type="text"
-                        v-model="v$.password.repeatPassword.$model" />
-                    <span class="user-information__error-massage" v-for="(error, index) in v$.password.repeatPassword.$errors"
+                        v-model="v$.userData.password.repeatPassword.$model" />
+                    <span class="user-information__error-massage" v-for="(error, index) in v$.userData.password.repeatPassword.$errors"
                         :key="index">{{ error.$message }}</span>
                 </div>
                 <my-button class="user-information__password-button button_grey" @click="changeUserData">Подтвердить</my-button>
@@ -65,28 +66,32 @@ export default {
         return {
             toast: useToast(),
             v$: useVuelidate(),
-            userImg: require('@/assets/img/Profile_icon.svg'),
-            userPassword: '1234',
-            welcomeМessage: this.username,
-            username: 'Иван Иванович',
-            email: 'ivanivanovich@mail.ru',
-            phone: '+7 999 999 99 99',
-            password: {
-                totalPassword: '',
-                newPassword: '',
-                repeatPassword: ''
+            welcomeМessage: 'Гость',
+            userData: {
+                userImg: require('@/assets/img/Profile_icon.svg'),
+                userPassword: '1234',
+                username: 'Иван Иванович',
+                email: 'ivanivanovich@mail.ru',
+                phone: '+7 999 999 99 99',
+                password: {
+                    totalPassword: '',
+                    newPassword: '',
+                    repeatPassword: ''
+                }
             }
         }
     },
     validations() {
         return {
-            username: { required: helpers.withMessage('Поле не должнобыть пустым', required), isRussian: helpers.withMessage('Только русские буквы', isRussian) },
-            email: { required: helpers.withMessage('Поле не должнобыть пустым', required), email: helpers.withMessage('Email введён не корректно', email) },
-            phone: { required: helpers.withMessage('Поле не должнобыть пустым', required), isPhone: helpers.withMessage('Не корректный номер', isPhone) },
-            password: {
-                totalPassword: { required: helpers.withMessage('Поле не должнобыть пустым', required), sameAs: helpers.withMessage('Не верный пароль', sameAs(this.userPassword)) },
-                newPassword: { required: helpers.withMessage('Поле не должнобыть пустым', required), minLength: helpers.withMessage('Минимальная длинна 4 символа', minLength(4))  },
-                repeatPassword: { required: helpers.withMessage('Поле не должнобыть пустым', required), sameAs: helpers.withMessage('Пароль не совпадает', sameAs(this.password.newPassword))  }
+            userData: {
+                username: { required: helpers.withMessage('Поле не должнобыть пустым', required), isRussian: helpers.withMessage('Только русские буквы', isRussian) },
+                email: { required: helpers.withMessage('Поле не должнобыть пустым', required), email: helpers.withMessage('Email введён не корректно', email) },
+                phone: { required: helpers.withMessage('Поле не должнобыть пустым', required), isPhone: helpers.withMessage('Введён не корректный номер (начало c +7)', isPhone) },
+                password: {
+                    totalPassword: { required: helpers.withMessage('Поле не должнобыть пустым', required), sameAs: helpers.withMessage('Не верный пароль', sameAs(this.userData.userPassword)) },
+                    newPassword: { required: helpers.withMessage('Поле не должнобыть пустым', required), minLength: helpers.withMessage('Минимальная длинна 4 символа', minLength(4)) },
+                    repeatPassword: { required: helpers.withMessage('Поле не должнобыть пустым', required), sameAs: helpers.withMessage('Пароль не совпадает', sameAs(this.userData.password.newPassword)) }
+                }
             }
         }
     },
@@ -98,14 +103,14 @@ export default {
                 console.log('1234');
             }
             else {
-                this.welcomeМessage = this.username
-                this.userPassword = this.password.newPassword
-                this.password = {
+                this.welcomeМessage = this.userData.username
+                this.userData.userPassword = this.userData.password.newPassword
+                this.userData.password = {
                     totalPassword: '',
                     newPassword: '',
                     repeatPassword: ''
                 }
-                this.toast.success("I'm a toast!")
+                this.toast.success("Успешно!")
             }
         }
     },

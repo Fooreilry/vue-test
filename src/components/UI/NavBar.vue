@@ -57,7 +57,8 @@ export default {
 
 <style scoped>
 .navbar{
-    padding: 76px 25px 0;
+    min-width: 1050px;
+    padding-top: 76px;
     margin:  0 auto;
     width: 100%;
     max-width: 1350px;
@@ -67,6 +68,7 @@ export default {
 
 }
 .navbar__wrapper {
+    padding: 0 50px;
     display: flex;
     align-items: center;
     justify-content: space-between;

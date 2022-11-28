@@ -1,13 +1,13 @@
 <template>
     <div class="main__wrapper">
         <my-header />
-        <!-- разбить на блоки -->
+        <!-- разбить на компоненты -->
         <div class="tool-kit">
             <div class="tool-kit__wrapper">
                 <div class="conteiner">
                     <h2 class="title tool-kit__title">Набор инструментов для контроля процессов продаж и маркетинга</h2>
                     <div class="tool-kit__items">
-                        <tools-card-item v-for="(tool, index) in tools" :tool="tool" :key="index" />
+                        <tools-card-item v-for="(toolKit, index) in toolKits" :tool="toolKit" :key="index" />
                     </div>
                 </div>
             </div>
@@ -63,7 +63,7 @@ export default {
     },
     data() {
         return {
-            tools: [
+            toolKits : [
                 { icon: require('@/assets/img/Add User.svg'), title: 'Превращайте лидов в покупателей', body: 'Используйте чат-боты, формы подписки и лендинги для сбора контактов. Автоматически добавляйте контакты в свою СRM и сопровождайте их по воронке до успешного завершения сделки.' },
                 { icon: require('@/assets/img/More Circle.svg'), title: 'Автоматизируйте коммуникацию', body: 'Благодаря бесшовной интеграции CRM с другими сервисами SendPulse вы сможете общаться с клиентами по электронной почте или через чат-бота прямо из карточки контакта в вашей СRM.' },
                 { icon: require('@/assets/img/Graph.svg'), title: 'Принимайте решения на основе данных', body: 'Вся история взаимодействий с клиентом у вас под рукой. Пользуйтесь всеми данными, чтобы выстраивать успешные воронки продаж и сокращать время на заключение сделок.' },
@@ -90,6 +90,7 @@ export default {
 
 <style scoped>
 .main__wrapper{
+    
     padding: 32px 32px 0;
     background-color: #F1F9FF;
 }
@@ -104,6 +105,7 @@ export default {
     margin:  0 auto;
     width: 100%;
     max-width: 1350px;
+    min-width: 1000px;
 }
 .tool-kit{
     width: 100%;
@@ -177,7 +179,7 @@ export default {
     width: 750.66px;
     height: 440px;
     background-image: url('@/assets/img/patterns.png');
-    background-size: contain;
+    background-size: cover;
     background-repeat: no-repeat;
 }
 .banner__text {

@@ -28,6 +28,7 @@ body {
     background-color: #FFFFFF;
 }
 .profile{
+    min-width: 1030px;
     width: 100%;
     background-color: #FFFFFF;
 }

@@ -26,7 +26,7 @@
 
 <style>
 .header{
-
+    min-width: 1000px;
     width: 100%;
     background-color: #029EEB;
     background-image: url('@/assets/img/Mask_group.png');

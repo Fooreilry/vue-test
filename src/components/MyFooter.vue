@@ -115,6 +115,7 @@ export default {
 
 <style>
 .footer{
+    min-width: 1000px;
     width: 100%;
     background-color: #ffffff;
     border-radius: 40px 40px 0 0;
