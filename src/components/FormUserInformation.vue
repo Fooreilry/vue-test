@@ -7,7 +7,8 @@
                 <!-- Создать UI компонент для input -->
                 <div class="user-information__user-field">
                     <label class="user-information__user-title user-information__user-title_name">Имя</label>
-                    <input class="user-information__user-input" type="text" v-model="v$.userData.username.$model" />
+                    <input class="user-information__user-input" type="text" v-model="v$.userData.username.$model" :readonly="editName"/>
+                    <div @click="changeEditName" class="user-information__edit"></div>
                     <span class="user-information__error-massage" v-for="(error, index) in v$.userData.username.$errors" :key="index">{{
                     error.$message }}</span>
                 </div>
@@ -28,22 +29,25 @@
                 <h2 class="user-information__password-title">Сменить пароль</h2>
                 <div class="user-information__password-field">
                     <label class="user-information__field-password-title">Старый пароль</label>
-                    <input class="user-information__password-input" placeholder="Введите пароль..." type="text"
+                    <input class="user-information__password-input" placeholder="Введите пароль..." :type="showTotalPassword ? 'text': 'password'"
                         v-model="v$.userData.password.totalPassword.$model" />
+                        <div @click="changeShowTotalPassword" class="user-information__password-eye"></div>
                     <span class="user-information__error-massage" v-for="(error, index) in v$.userData.password.totalPassword.$errors"
                         :key="index">{{ error.$message }}</span>
                 </div>
                 <div class="user-information__password-field">
                     <label class="user-information__field-password-title">Новый пароль</label>
-                    <input class="user-information__password-input" placeholder="Введите пароль..." type="text"
+                    <input class="user-information__password-input" placeholder="Введите пароль..." :type="showNewPassword ? 'text': 'password'"
                         v-model="v$.userData.password.newPassword.$model" />
+                        <div @click="changeShowNewPassword" class="user-information__password-eye"></div>
                     <span class="user-information__error-massage" v-for="(error, index) in v$.userData.password.newPassword.$errors"
                         :key="index">{{ error.$message }}</span>
                 </div>
                 <div class="user-information__password-field">
                     <label class="user-information__field-password-title">Повторите новый пароль</label>
-                    <input class="user-information__password-input" placeholder="Введите пароль..." type="text"
+                    <input class="user-information__password-input" placeholder="Введите пароль..." :type="showRepeatPassword ? 'text': 'password'"
                         v-model="v$.userData.password.repeatPassword.$model" />
+                        <div @click="changeShowRepeatPassword" class="user-information__password-eye"></div>
                     <span class="user-information__error-massage" v-for="(error, index) in v$.userData.password.repeatPassword.$errors"
                         :key="index">{{ error.$message }}</span>
                 </div>
@@ -66,6 +70,10 @@ export default {
         return {
             toast: useToast(),
             v$: useVuelidate(),
+            editName: true,
+            showTotalPassword: false,
+            showNewPassword: false,
+            showRepeatPassword: false,
             welcomeМessage: 'Гость',
             userData: {
                 userImg: require('@/assets/img/Profile_icon.svg'),
@@ -96,11 +104,25 @@ export default {
         }
     },
     methods: {
+        changeShowTotalPassword() {
+            this.showTotalPassword ? this.showTotalPassword = false : this.showTotalPassword = true
+        },
+        changeShowNewPassword() {
+            this.showNewPassword ? this.showNewPassword = false : this.showNewPassword = true
+        },
+        changeShowRepeatPassword() {
+            this.showRepeatPassword ? this.showRepeatPassword = false : this.showRepeatPassword = true
+        },
+        changeEditName() {
+            this.editName ? this.editName = false : this.editName = true
+            if (this.editName) {
+                this.welcomeМessage = this.userData.username
+            }
+        },
         changeUserData() {
-            
             this.v$.$validate()
             if (this.v$.$error) {
-                console.log('1234');
+                this.toast.error("Ошибка")
             }
             else {
                 this.welcomeМessage = this.userData.username
@@ -141,6 +163,8 @@ export default {
     display: flex;
     flex-direction: column;
     width: 100%;
+    position: relative;
+    max-width: 185px;
 }
 .user-information__user-title {
     font-weight: 400;
@@ -182,6 +206,18 @@ export default {
     color: #010849;
     outline: none;
 }
+.user-information__edit{
+    background-image: url('@/assets/img/Edit.svg');
+    background-repeat: no-repeat;
+    background-size: contain;
+    position: absolute;
+    background-color: #ffffff;
+    top: 42px;
+    right: 0px;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+}
 .user-information__password {
     max-width: 314px;
     display: flex;
@@ -199,14 +235,14 @@ export default {
     display: flex;
     flex-direction: column;
     width: 100%;
+    position: relative;
 }
 
 .user-information__field-password-title {
     font-weight: 400;
     font-size: 15px;
     line-height: 18px;
-    color: #010849;
-    opacity: 0.3;
+    color: rgba(1, 8, 73, 0.3);
     margin-bottom: 10px;
 }
 
@@ -228,10 +264,21 @@ export default {
     border-bottom: 1px solid rgba(1, 8, 73, 0.2);
     outline: none;
 }
+.user-information__password-eye{
+    background-image: url('@/assets/img/ClosedEyepx.svg');
+    width: 24px;
+    height: 24px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: right;
+    position: absolute;
+    top: 35px;
+    right: 0;
+    cursor: pointer;
+}
 .user-information__password-input::placeholder{
     opacity: 0.5;
 }
-
 .user-information__password-button {
     align-self: end;
     padding: 4px 15.5px;

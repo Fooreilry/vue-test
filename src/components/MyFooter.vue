@@ -5,37 +5,48 @@
             <div class="footer-menu">
                 <div class="footer-menu__wrapper">
                     <ul class="footer-menu__items">
-                        <h3 class="footer-menu__items-title">Email</h3>
-                        <li v-for="(email, index) in emails" :key="index" class="footer-menu__item">{{ email }}</li>
+                        <li class="footer-menu__item">
+                            <h3 class="footer-menu__items-title">Email</h3>
+                            <router-link v-for="(email, index) in emails" :key="index" to="/" class="footer-menu__item-link">{{ email }}</router-link>
+                        </li>
                     </ul>
                     <ul class="footer-menu__items">
-                        <h3 class="footer-menu__items-title">Чат-боты</h3>
-                        <li v-for="(bot, index) in bots" :key="index" class="footer-menu__item">{{ bot }}</li>
+                        <li class="footer-menu__item">
+                            <h3 class="footer-menu__items-title">Чат-боты</h3>
+                            <router-link v-for="(bot, index) in bots" :key="index" to="/" class="footer-menu__item-link">{{ bot }}</router-link>
+                        </li>
                     </ul>
                     <ul class="footer-menu__items">
-                        <h3 class="footer-menu__items-title">Сервисы</h3>
-                        <li v-for="(service, index) in services" :key="index" class="footer-menu__item">{{ service }}</li>
+                        <li class="footer-menu__item">
+                            <h3 class="footer-menu__items-title">Сервисы</h3>
+                            <router-link v-for="(service, index) in services" :key="index" to="/" class="footer-menu__item-link">{{ service }} </router-link>
+                        </li>
                     </ul>
                     <ul class="footer-menu__items">
-                        <h3 class="footer-menu__items-title">Полезное</h3>
-                        <li v-for="(useful, index) in usefuls" :key="index" class="footer-menu__item">{{ useful }}</li>
+                        <li class="footer-menu__item">
+                            <h3 class="footer-menu__items-title">Полезное</h3>
+                            <router-link v-for="(useful, index) in usefuls" :key="index" to="/" class="footer-menu__item-link">{{ useful }}</router-link>
+                        </li>
                     </ul>
                     <ul class="footer-menu__items footer-menu__items_row-1">
+                        <li class="footer-menu__item">
                         <h3 class="footer-menu__items-title">Партнерам</h3>
-                        <li v-for="(partner, index) in partners" :key="index" class="footer-menu__item">{{ partner }}</li>
+                        <router-link v-for="(partner, index) in partners" :key="index" to="/" class="footer-menu__item-link">{{ partner }} </router-link>
+                        </li>
                     </ul>
                     <ul class="footer-menu__items footer-menu__items_row-2">
-                        <h3 class="footer-menu__items-title">О компании</h3>
-                        <li v-for="(about, index) in abouts" :key="index" class="footer-menu__item">{{ about }}</li>
+                        <li class="footer-menu__item">
+                            <h3 class="footer-menu__items-title">О компании</h3>
+                            <router-link v-for="(about, index) in abouts" :key="index" to="/" class="footer-menu__item-link">{{ about }}</router-link>
+                        </li>
                     </ul>
                 </div>
             </div>
             <div class="footer-links">
                 <ul class="rules-links">
-                    <li class="rules-link">Правила использования</li>
-                    <li class="rules-link">Безопасность SendPulse</li>
-                    <li class="rules-link">Политика Cookies</li>
-                    <li class="rules-link">Политика конфиденциальности</li>
+                    <li class="rules-link" v-for="(releLink, index) in relesLink" :key="index">
+                    <router-link class="rules-link__text" to="/">{{releLink}}</router-link>
+                    </li>
                 </ul>
                 <ul class="social-links">
                     <li class="social-link"><img :src="require('@/assets/img/facebook.svg')" alt=""></li>
@@ -49,6 +60,7 @@
 </template>
 
 <script>
+
 export default {
     data() {
         return {
@@ -107,6 +119,12 @@ export default {
                 'Отзывы клиентов',
                 'Обновления сервиса',
                 'Карьера'
+            ],
+            relesLink: [
+                'Правила использования',
+                'Безопасность SendPulse',
+                'Политика Cookies',
+                'Политика конфиденциальности'
             ]
         }
     },
@@ -144,6 +162,11 @@ export default {
 .footer-menu__items{
     width: 100%;
 }
+.footer-menu__item{
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+}
 .footer-menu__items_row-1{
     grid-column-start: 5;
     grid-row-start: 1;
@@ -161,12 +184,13 @@ export default {
     color: #010849;
     margin-bottom: 16px;
 }
-.footer-menu__item{
+.footer-menu__item-link{
     color: #010849;
     font-size: 16px;
     font-weight: 400;
     line-height: 38px;
     opacity: 0.5;
+    text-decoration: none;
 }
 .footer-links{
     display: flex;
@@ -178,18 +202,22 @@ export default {
     gap: 20px;
 }
 .rules-links{
-    width: 100%;
+    width: 70%;
     display: flex;
     align-self: end;
     justify-content: start;
-    gap: 50px;
+    margin-right: auto;
 
 }
 .rules-link{
+    margin-right: auto;
+}
+.rules-link__text{
     font-weight: 400;
     font-size: 14px;
     line-height: 32px;
     color: #029EEB;
     cursor: pointer;
+    text-decoration: none;
 }
 </style>

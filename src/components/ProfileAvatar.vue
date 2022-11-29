@@ -42,7 +42,7 @@ export default {
         async postReqv(formData) {
             const request = await axios.post('https://tinn.io/api/test/avatar/', formData)
             console.log(request.data.data);
-            this.srcImg = `https://tinn.io/api/test/avatar/${request.data.data.avatar}` 
+            this.srcImg = `https://tinn.io/api/test/avatar/${request.data.data.avater}` 
         },
         removeAvatar() {
             this.srcImg = this.defaultImg
