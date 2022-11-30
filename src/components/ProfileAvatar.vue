@@ -2,7 +2,7 @@
     <form class="profile-avatar">
         <div class="profile-avatar__wrapper">
             <div class="profile-avatar__block-img">
-                <input class="profile-avatar__input" type="file" ref="file" @change="changeAvatar" accept="image/png, image/jpeg, image/svg">
+                <input class="profile-avatar__input" type="file" ref="file" @change="convertFormData" accept="image/png, image/jpeg, image/svg">
                 <img class="profile-avatar__img" :src="userImg" alt="">
             </div>
             <ul class="profile-avatar__controls">
@@ -17,25 +17,23 @@
     </form>
 </template>
 <script>
-import axios from 'axios'
-import { mapState, mapMutations } from 'vuex';
+
+import { mapState, mapMutations, mapActions } from 'vuex';
 export default {
     methods: {
         ...mapMutations({
             setUserImg: 'avatar/setUserImg',
         }),
+        ...mapActions({
+            imgRequest: 'avatar/imgRequest'
+        }),
         selectImg() {
             this.$refs.file.click()
         },
-        convertFornData(e) {
+        convertFormData(e) {
             const formData = new FormData()
             formData.append('avatar', e.target.files[0])
             this.imgRequest(formData)
-        },
-        async imgRequest(formData) {
-            const request = await axios.post('https://tinn.io/api/test/avatar/', formData)
-            console.log(request.data.data);
-            this.srcImg = `https://tinn.io/api/test/avatar/${request.data.data.avater}` 
         },
         removeAvatar() {
             this.setUserImg(this.userDefaulthImg)
