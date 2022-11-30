@@ -1,27 +1,26 @@
 <template>
     <div class="wrapper">
-        <profile-avatar class="user-information__profile-avatar" :defaultImg="userData.userImg"/>
+        <profile-avatar class="user-information__profile-avatar" />
         <form class="user-information" @submit.prevent>
             <h2 class="user-information__title-welcome">Добро пожаловать, {{ welcomeМessage }}!</h2>
             <div class="user-information__user">
-                <!-- Создать UI компонент для input -->
                 <div class="user-information__user-field">
                     <label class="user-information__user-title user-information__user-title_name">Имя</label>
-                    <input class="user-information__user-input" type="text" v-model="v$.userData.username.$model" :readonly="editName"/>
-                    <div @click="changeEditName" class="user-information__edit"></div>
-                    <span class="user-information__error-massage" v-for="(error, index) in v$.userData.username.$errors" :key="index">{{
+                    <input class="user-information__user-input" type="text" v-model="usernameValid" :readonly="editName"/>
+                    <div @click="setEditName(editName)" class="user-information__edit"></div>
+                    <span class="user-information__error-massage" v-for="(error, index) in v$.username.$errors" :key="index">{{
                     error.$message }}</span>
                 </div>
                 <div class="user-information__user-field ">
                     <label class="user-information__user-title user-information__user-title_email">Email</label>
-                    <input class="user-information__user-input" type="email" v-model="v$.userData.email.$model" />
-                    <span class="user-information__error-massage" v-for="(error, index) in v$.userData.email.$errors" :key="index">{{
+                    <input class="user-information__user-input" type="email" v-model="emailValid" />
+                    <span class="user-information__error-massage" v-for="(error, index) in v$.email.$errors" :key="index">{{
                     error.$message }}</span>
                 </div>
                 <div class="user-information__user-field">
                     <label class="user-information__user-title user-information__user-title_name_phone">Телефон</label>
-                    <input class="user-information__user-input" type="text" v-model="v$.userData.phone.$model" />
-                    <span class="user-information__error-massage" v-for="(error, index) in v$.userData.phone.$errors" :key="index">{{
+                    <input class="user-information__user-input" type="text" v-model="phoneValid" />
+                    <span class="user-information__error-massage" v-for="(error, index) in v$.phone.$errors" :key="index">{{
                     error.$message }}</span>
                 </div>
             </div>
@@ -29,26 +28,23 @@
                 <h2 class="user-information__password-title">Сменить пароль</h2>
                 <div class="user-information__password-field">
                     <label class="user-information__field-password-title">Старый пароль</label>
-                    <input class="user-information__password-input" placeholder="Введите пароль..." :type="showTotalPassword ? 'text': 'password'"
-                        v-model="v$.userData.password.totalPassword.$model" />
-                        <div @click="changeShowTotalPassword" class="user-information__password-eye"></div>
-                    <span class="user-information__error-massage" v-for="(error, index) in v$.userData.password.totalPassword.$errors"
+                    <input class="user-information__password-input" placeholder="Введите пароль..." v-model="passwordTotalValid" :type="showTotalPassword ? 'text': 'password'"/>
+                        <div @click="setShowTotalPassword(showTotalPassword)" class="user-information__password-eye"></div>
+                    <span class="user-information__error-massage" v-for="(error, index) in v$.password.totalPassword.$errors"
                         :key="index">{{ error.$message }}</span>
                 </div>
                 <div class="user-information__password-field">
                     <label class="user-information__field-password-title">Новый пароль</label>
-                    <input class="user-information__password-input" placeholder="Введите пароль..." :type="showNewPassword ? 'text': 'password'"
-                        v-model="v$.userData.password.newPassword.$model" />
-                        <div @click="changeShowNewPassword" class="user-information__password-eye"></div>
-                    <span class="user-information__error-massage" v-for="(error, index) in v$.userData.password.newPassword.$errors"
+                    <input class="user-information__password-input" placeholder="Введите пароль..." v-model="passwordNewValid" :type="showNewPassword ? 'text': 'password'"/>
+                        <div @click="setShowNewPassword(showNewPassword)" class="user-information__password-eye"></div>
+                    <span class="user-information__error-massage" v-for="(error, index) in v$.password.newPassword.$errors"
                         :key="index">{{ error.$message }}</span>
                 </div>
                 <div class="user-information__password-field">
                     <label class="user-information__field-password-title">Повторите новый пароль</label>
-                    <input class="user-information__password-input" placeholder="Введите пароль..." :type="showRepeatPassword ? 'text': 'password'"
-                        v-model="v$.userData.password.repeatPassword.$model" />
-                        <div @click="changeShowRepeatPassword" class="user-information__password-eye"></div>
-                    <span class="user-information__error-massage" v-for="(error, index) in v$.userData.password.repeatPassword.$errors"
+                    <input class="user-information__password-input" placeholder="Введите пароль..." v-model="passwordRepeatValid" :type="showRepeatPassword ? 'text': 'password'"/>
+                        <div @click="setShowRepeatPassword(showRepeatPassword)" class="user-information__password-eye"></div>
+                    <span class="user-information__error-massage" v-for="(error, index) in v$.password.repeatPassword.$errors"
                         :key="index">{{ error.$message }}</span>
                 </div>
                 <my-button class="user-information__password-button button_grey" @click="changeUserData">Подтвердить</my-button>
@@ -62,6 +58,7 @@ import { required, email, sameAs, minLength, helpers } from '@vuelidate/validato
 import { isRussian, isPhone } from '@/scripts/CustomValidators'
 import { useToast } from "vue-toastification";
 import ProfileAvatar from './ProfileAvatar.vue';
+import { mapState, mapMutations} from 'vuex';
 export default {
     components: {
         ProfileAvatar
@@ -70,72 +67,118 @@ export default {
         return {
             toast: useToast(),
             v$: useVuelidate(),
-            editName: true,
-            showTotalPassword: false,
-            showNewPassword: false,
-            showRepeatPassword: false,
-            welcomeМessage: 'Гость',
-            userData: {
-                userImg: require('@/assets/img/Profile_icon.svg'),
-                userPassword: '1234',
-                username: 'Иван Иванович',
-                email: 'ivanivanovich@mail.ru',
-                phone: '+7 999 999 99 99',
-                password: {
-                    totalPassword: '',
-                    newPassword: '',
-                    repeatPassword: ''
-                }
-            }
         }
     },
     validations() {
         return {
-            userData: {
-                username: { required: helpers.withMessage('Поле не должнобыть пустым', required), isRussian: helpers.withMessage('Только русские буквы', isRussian) },
-                email: { required: helpers.withMessage('Поле не должнобыть пустым', required), email: helpers.withMessage('Email введён не корректно', email) },
-                phone: { required: helpers.withMessage('Поле не должнобыть пустым', required), isPhone: helpers.withMessage('Введён не корректный номер (начало c +7)', isPhone) },
-                password: {
-                    totalPassword: { required: helpers.withMessage('Поле не должнобыть пустым', required), sameAs: helpers.withMessage('Не верный пароль', sameAs(this.userData.userPassword)) },
-                    newPassword: { required: helpers.withMessage('Поле не должнобыть пустым', required), minLength: helpers.withMessage('Минимальная длинна 4 символа', minLength(4)) },
-                    repeatPassword: { required: helpers.withMessage('Поле не должнобыть пустым', required), sameAs: helpers.withMessage('Пароль не совпадает', sameAs(this.userData.password.newPassword)) }
-                }
+            username: { required: helpers.withMessage('Поле не должнобыть пустым', required), isRussian: helpers.withMessage('Только русские буквы', isRussian) },
+            email: { required: helpers.withMessage('Поле не должнобыть пустым', required), email: helpers.withMessage('Email введён не корректно', email) },
+            phone: { required: helpers.withMessage('Поле не должнобыть пустым', required), isPhone: helpers.withMessage('Введён не корректный номер (начало c +7)', isPhone) },
+            password: {
+                totalPassword: { required: helpers.withMessage('Поле не должнобыть пустым', required), sameAs: helpers.withMessage('Не верный пароль', sameAs(this.userPassword)) },
+                newPassword: { required: helpers.withMessage('Поле не должнобыть пустым', required), minLength: helpers.withMessage('Минимальная длинна 4 символа', minLength(4)) },
+                repeatPassword: { required: helpers.withMessage('Поле не должнобыть пустым', required), sameAs: helpers.withMessage('Не верный пароль', sameAs(this.password.newPassword)) }
             }
         }
     },
     methods: {
-        changeShowTotalPassword() {
-            this.showTotalPassword ? this.showTotalPassword = false : this.showTotalPassword = true
-        },
-        changeShowNewPassword() {
-            this.showNewPassword ? this.showNewPassword = false : this.showNewPassword = true
-        },
-        changeShowRepeatPassword() {
-            this.showRepeatPassword ? this.showRepeatPassword = false : this.showRepeatPassword = true
-        },
-        changeEditName() {
-            this.editName ? this.editName = false : this.editName = true
-            if (this.editName) {
-                this.welcomeМessage = this.userData.username
-            }
-        },
+        ...mapMutations({
+            setUsername: 'user/setUsername',
+            setWelcomeМessage: 'user/setWelcomeМessage',
+            setEmail: 'user/setEmail',
+            setPhone: 'user/setPhone',
+            setTotalPassword: 'user/setTotalPassword',
+            setNewPassword: 'user/setNewPassword',
+            setRepeatPassword: 'user/setRepeatPassword',
+            setShowTotalPassword: 'user/setShowTotalPassword',
+            setShowNewPassword: 'user/setShowNewPassword',
+            setShowRepeatPassword: 'user/setShowRepeatPassword',
+            setEditName: 'user/setEditName',
+            setUserPassword: 'user/setUserPassword'
+        }),
         changeUserData() {
             this.v$.$validate()
             if (this.v$.$error) {
                 this.toast.error("Ошибка")
             }
             else {
-                this.welcomeМessage = this.userData.username
-                this.userData.userPassword = this.userData.password.newPassword
-                this.userData.password = {
-                    totalPassword: '',
-                    newPassword: '',
-                    repeatPassword: ''
-                }
+                this.setWelcomeМessage(this.username)
+                this.setUserPassword(this.password.newPassword)
+                this.setTotalPassword(''),
+                this.setNewPassword(''),
+                this.setRepeatPassword(''),
                 this.toast.success("Успешно!")
             }
         }
     },
+    computed:{
+        ...mapState({
+            editName: state => state.user.editName,
+            showTotalPassword: state => state.user.showTotalPassword,
+            showNewPassword: state => state.user.showNewPassword,
+            showRepeatPassword: state => state.user.showRepeatPassword,
+            welcomeМessage: state => state.user.welcomeМessage,
+            userPassword: state => state.user.userPassword,
+            username: state => state.user.username,
+            email: state => state.user.email,
+            phone: state => state.user.phone,
+            password: state => state.user.password
+        }),
+        usernameValid: {
+            get() {
+                return this.username
+            },
+            set(username) {
+                this.setUsername(username)
+                this.v$.username.$touch()
+            },
+        },
+        emailValid: {
+            get() {
+                return this.email
+             },
+            set(email) {
+                this.setEmail(email)
+                this.v$.email.$touch()
+             },
+        },
+        phoneValid: {
+            get() {
+                return this.phone
+            },
+            set(phone) {
+                this.setPhone(phone)
+                this.v$.phone.$touch()
+            },
+        },
+        passwordTotalValid: {
+            get() {
+                return this.password.totalPassword
+            },
+            set(passwordTotal) {
+                this.setTotalPassword(passwordTotal)
+                this.v$.password.totalPassword.$touch()
+            },
+        },
+        passwordNewValid: {
+            get() {
+                return this.password.newPassword
+            },
+            set(passwordNew) {
+                this.setNewPassword(passwordNew)
+                this.v$.password.newPassword.$touch()
+            },
+        },
+        passwordRepeatValid: {
+            get() {
+                return this.password.repeatPassword
+            },
+            set(repeatPassword) {
+                this.setRepeatPassword(repeatPassword)
+                this.v$.password.repeatPassword.$touch()
+            },
+        },
+    }
 }
 </script>
 <style scoped>
@@ -205,6 +248,7 @@ export default {
     line-height: 21px;
     color: #010849;
     outline: none;
+    font-family: inherit;
 }
 .user-information__edit{
     background-image: url('@/assets/img/Edit.svg');
@@ -263,6 +307,7 @@ export default {
     border: none;
     border-bottom: 1px solid rgba(1, 8, 73, 0.2);
     outline: none;
+    font-family: inherit;
 }
 .user-information__password-eye{
     background-image: url('@/assets/img/ClosedEyepx.svg');

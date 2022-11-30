@@ -1,5 +1,5 @@
 @font-face {
-  font-family: 'ABeeZee-Italic';
+  font-family: 'ABeeZee-Italic',sans-serif;
   src: url('ABeeZee-Italic.eot');
   src: url('ABeeZee-Italic.eot?#iefix') format('embedded-opentype'),
        url('ABeeZee-Italic.svg#ABeeZee-Italic') format('svg'),
@@ -7,6 +7,6 @@
        url('ABeeZee-Italic.woff') format('woff'),
        url('ABeeZee-Italic.woff2') format('woff2');
   font-weight: normal;
-  font-style: normal;
+  font-style: italic;
 }
 

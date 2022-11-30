@@ -21,6 +21,7 @@ export default {
     font-style: italic;
     font-weight: 400;
     cursor: pointer;
+    font-family: inherit;
 }
 .button_grey{
     background-color: #DAECFB;

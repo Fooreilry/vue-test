@@ -4,6 +4,7 @@ import router from './router'
 import UIcomponents from '@/components/UI'
 import Toast from "vue-toastification";
 import "vue-toastification/dist/index.css"
+import store from '@/store';
 
 const app = createApp(App);
 
@@ -26,4 +27,8 @@ const toastOption = {
     rtl: false
 }
 
-app.use(router).use(Toast, toastOption).mount('#app');
+app
+    .use(router)
+    .use(store)
+    .use(Toast, toastOption)
+    .mount('#app');

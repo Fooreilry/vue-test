@@ -3,7 +3,7 @@
         <div class="profile-avatar__wrapper">
             <div class="profile-avatar__block-img">
                 <input class="profile-avatar__input" type="file" ref="file" @change="changeAvatar" accept="image/png, image/jpeg, image/svg">
-                <img class="profile-avatar__img" :src="srcImg" alt="">
+                <img class="profile-avatar__img" :src="userImg" alt="">
             </div>
             <ul class="profile-avatar__controls">
                 <li class="profile-avatar__change" @click="selectImg">
@@ -18,36 +18,38 @@
 </template>
 <script>
 import axios from 'axios'
+import { mapState, mapMutations } from 'vuex';
 export default {
-    props: {
-        defaultImg: {
-            type: String
-        }
-    },
-    data() {
-        return {
-            srcImg: this.defaultImg
-        }
-    },
     methods: {
+        ...mapMutations({
+            setUserImg: 'avatar/setUserImg',
+        }),
         selectImg() {
             this.$refs.file.click()
         },
-        changeAvatar(e) {
-            console.log(e.target.files[0].name);
+        convertFornData(e) {
             const formData = new FormData()
             formData.append('avatar', e.target.files[0])
-            this.postReqv(formData)
+            this.imgRequest(formData)
         },
-        async postReqv(formData) {
+        async imgRequest(formData) {
             const request = await axios.post('https://tinn.io/api/test/avatar/', formData)
             console.log(request.data.data);
             this.srcImg = `https://tinn.io/api/test/avatar/${request.data.data.avater}` 
         },
         removeAvatar() {
-            this.srcImg = this.defaultImg
+            this.setUserImg(this.userDefaulthImg)
         }
     },
+    computed: {
+        ...mapState({
+            userDefaulthImg: state => state.avatar.userDefaulthImg,
+            userImg: state => state.avatar.userImg,
+        })
+    },
+    mounted() {
+        this.setUserImg(this.userDefaulthImg)
+    }
 }
 </script>
 <style scoped>
